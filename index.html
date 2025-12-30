@@ -69,14 +69,6 @@
             60% { transform: rotate(-45deg) scale(1); }
         }
 
-        .instruction {
-            color: #c0392b;
-            margin-top: 80px;
-            font-weight: bold;
-            letter-spacing: 1px;
-            font-style: italic;
-        }
-
         /* --- CARTA --- */
         .card {
             position: absolute;
@@ -94,6 +86,21 @@
             opacity: 0;
             transform: translateY(20px);
             transition: opacity 1.5s ease, transform 1.5s ease;
+        }
+
+        /* Encabezado de la carta */
+        .letter-header {
+            text-align: center;
+            margin-bottom: 25px;
+            border-bottom: 1px solid #eee0d0;
+            padding-bottom: 15px;
+        }
+
+        .letter-header h1 {
+            margin: 0;
+            color: #c0392b;
+            font-size: 1.8rem;
+            font-style: italic;
         }
 
         /* Scrollbar suave para la carta */
@@ -146,17 +153,21 @@
 
     <div class="intro-container" id="intro">
         <div class="heart" onclick="openLetter()"></div>
+        <p style="margin-top: 80px; color: #c0392b; font-weight: bold; font-style: italic;">Toca mi corazón</p>
     </div>
 
     <div class="card" id="card">
+        <div class="letter-header">
+            <h1>Hana Ortega </h1>
+        </div>
         <div class="letter-content" id="text-target"></div>
-        <div class="final-line" id="final-msg">Feliz 5° Mesiversario ❤️</div>
+        <div class="final-line" id="final-msg">Feliz 5° Mesiversario, Mi Amor ❤️</div>
     </div>
 
     <script>
         const text = `Mi amor,
 
-desde que existes en mi vida algo dentro de mí cambió para siempre, no fue ruido ni prisa, fue una certeza silenciosa que se instaló en el pecho, una sensación que me dice que contigo todo tiene más sentido, que tus palabras me atraviesan, que tu mirada me sostiene, y que incluso en la distancia tu presencia se siente.
+desde que llegaste a mi vida algo se acomodó dentro de mí, sin avisar y sin hacer ruido, como si siempre hubieras tenido un lugar aquí, contigo las cosas se sienten más claras, más ligeras, tus palabras me alcanzan, tu mirada me da calma, y aun cuando no estás cerca tu presencia sigue acompañándome.
 
 Me tienes de una forma que no sé explicar del todo, te pienso sin buscarte, te extraño aun cuando estás cerca, me descubro sonriendo por recuerdos simples, por instantes que solo tú y yo entendemos, contigo el tiempo deja de pesar, y el mundo parece menos duro, más humano, más nuestro.
 
@@ -192,7 +203,6 @@ Te amo y te adoro con una intensidad que no se explica, se siente, una intensida
             setTimeout(() => {
                 intro.style.display = 'none';
                 card.style.display = 'block';
-                // Pequeño delay para que la transición CSS se note
                 setTimeout(() => {
                     card.style.opacity = '1';
                     card.style.transform = 'translateY(0)';
@@ -205,11 +215,12 @@ Te amo y te adoro con una intensidad que no se explica, se siente, una intensida
         let index = 0;
         function typeWriter() {
             const target = document.getElementById('text-target');
+            const cardContainer = document.getElementById('card');
+            
             if (index < text.length) {
                 target.innerHTML += text.charAt(index);
                 index++;
                 
-                // Si hay punto o coma, pausa más larga
                 let char = text.charAt(index - 1);
                 let delay = 45;
                 if (char === '.' || char === '\n') delay = 600;
@@ -217,13 +228,13 @@ Te amo y te adoro con una intensidad que no se explica, se siente, una intensida
 
                 setTimeout(typeWriter, delay);
                 
-                // Auto-scroll si el texto supera la altura de la carta
-                document.getElementById('card').scrollTop = document.getElementById('card').scrollHeight;
+                // Auto-scroll para que el texto siempre sea visible al escribir
+                cardContainer.scrollTop = cardContainer.scrollHeight;
             } else {
                 document.getElementById('final-msg').style.opacity = '1';
+                cardContainer.scrollTop = cardContainer.scrollHeight;
             }
         }
     </script>
 </body>
 </html>
-
